@@ -1,0 +1,270 @@
+{
+	"ui": 
+	{
+		"individuals": 
+		[
+			{
+				"id": "I-1",
+				"sex": "F",
+				"location": 
+				{
+					"row": 1.0,
+					"column": 1.0
+				},
+
+				"markers": 
+				[
+					"H",
+					"H",
+					"A",
+					"B"
+				]
+			},
+
+			{
+				"id": "I-2",
+				"sex": "M",
+				"location": 
+				{
+					"row": 1.0,
+					"column": 6.0
+				},
+
+				"markers": 
+				[
+					"H",
+					"H",
+					"C",
+					"D"
+				]
+			},
+
+			{
+				"id": "II-1",
+				"sex": "F",
+				"location": 
+				{
+					"row": 2.0,
+					"column": 2.0
+				},
+
+				"markers": 
+				[
+					"H",
+					"H",
+					"B",
+					"D"
+				]
+			},
+
+			{
+				"id": "II-2",
+				"sex": "F",
+				"location": 
+				{
+					"row": 2.0,
+					"column": 3.0
+				},
+
+				"markers": 
+				[
+					"H",
+					"H",
+					"B",
+					"D"
+				]
+			},
+
+			{
+				"id": "II-3",
+				"sex": "M",
+				"location": 
+				{
+					"row": 2.0,
+					"column": 4.0
+				},
+
+				"markers": 
+				[
+					"H",
+					"H",
+					"B",
+					"C"
+				]
+			},
+
+			{
+				"id": "II-4",
+				"sex": "M",
+				"location": 
+				{
+					"row": 2.0,
+					"column": 5.0
+				},
+
+				"markers": 
+				[
+					"H",
+					"H",
+					"A",
+					"C"
+				]
+			}
+		],
+
+		"sexes": 
+		[
+			{
+				"id": "F",
+				"kind": "female"
+			},
+
+			{
+				"id": "M",
+				"kind": "male"
+			}
+		],
+
+		"relationships": 
+		[
+			{
+				"id": "GenI-1,2",
+				"parents": 
+				[
+					"I-1",
+					"I-2"
+				],
+
+				"children": 
+				[
+					"II-1",
+					"II-2",
+					"II-3",
+					"II-4"
+				]
+			}
+		],
+
+		"markers": 
+		[
+			{
+				"id": "H",
+				"name": "Huntington\u0027s",
+				"kind": "fill"
+			},
+
+			{
+				"id": "A",
+				"name": "SSR37 A",
+				"kind": "label"
+			},
+
+			{
+				"id": "B",
+				"name": "SSR37 B",
+				"kind": "label"
+			},
+
+			{
+				"id": "C",
+				"name": "SSR37 C",
+				"kind": "label"
+			},
+
+			{
+				"id": "D",
+				"name": "SSR37 D",
+				"kind": "label"
+			}
+		]
+	},
+
+	"rules": 
+	{
+		"individuals": 
+		[
+			{
+				"id": "I-1",
+				"genotype": "complete",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					],
+
+					[
+						"A",
+						"B"
+					]
+				]
+			},
+
+			{
+				"id": "I-2",
+				"genotype": "complete",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					],
+
+					[
+						"C",
+						"D"
+					]
+				]
+			},
+
+			{
+				"id": "II-1",
+				"genotype": "complete"
+			},
+
+			{
+				"id": "II-2",
+				"genotype": "complete"
+			},
+
+			{
+				"id": "II-3",
+				"genotype": "complete"
+			},
+
+			{
+				"id": "II-4",
+				"genotype": "complete"
+			}
+		],
+
+		"genes": 
+		[
+			{
+				"id": "Huntington\u0027s",
+				"chromosome": "1",
+				"alleles": 
+				[
+					"H",
+					"h"
+				],
+
+				"location": 20.0
+			},
+
+			{
+				"id": "Rest of alleles",
+				"chromosome": "1",
+				"alleles": 
+				[
+					"A",
+					"B",
+					"C",
+					"D"
+				],
+
+				"location": 25.0
+			}
+		]
+	}
+}

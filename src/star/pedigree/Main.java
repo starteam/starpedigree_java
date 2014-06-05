@@ -30,6 +30,7 @@ import star.pedigree.model.DiploidAlleles;
 import star.pedigree.model.Gene;
 import star.pedigree.model.Individual;
 import star.pedigree.model.MainModel;
+import star.pedigree.model.Marker;
 import star.pedigree.model.UIIndividual;
 import star.pedigree.model.UIRelationship;
 
@@ -53,7 +54,7 @@ public class Main {
 
 		public void makeup(CompleteIndividual c) {
 			int counter = 0;
-			logger.info( ""+c );
+			logger.info("" + c);
 			while (!c.done && counter++ < 99) {
 				try {
 					GeneticMakeupImpl makeup = propose(c);
@@ -71,7 +72,7 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-			logger.info(c+ " "+ c.done );
+			logger.info(c + " " + c.done);
 		}
 
 		public GeneticMakeupImpl propose(CompleteIndividual c) {
@@ -93,6 +94,43 @@ public class Main {
 	public void run() {
 		MainModel model = load();
 		buildEnvironment(model);
+		buildGenotypes(model);
+		updateModel(model, individuals);
+		dump();
+		printModel(model);
+	}
+
+	private void printModel(MainModel model) {
+		Gson g = new Gson();
+		System.out.println( g.toJson(model) );
+		
+	}
+
+	private void updateModel(MainModel model,
+			TreeMap<String, CompleteIndividual> individuals) {
+		for (UIIndividual individual : model.ui.individuals) {
+			individual.clearMarkers();
+		}
+		for (CompleteIndividual i : individuals.values()) {
+			UIIndividual individual = model.ui
+					.findUIIndividual(i.individual.id);
+			GeneticMakeupImpl makeup = i.makeup;
+			for (star.genetics.genetic.model.DiploidAlleles d : makeup.values()) {
+				updateUIIndividualWithMarker(model, individual, d.get(0));
+				updateUIIndividualWithMarker(model, individual, d.get(1));
+			}
+		}
+	}
+
+	private void updateUIIndividualWithMarker(MainModel model,
+			UIIndividual individual, Allele allele) {
+		if (allele != null) {
+			Marker m = model.ui.findMarker(allele.getName());
+			if (m != null) {
+				individual.addMarker(m.id);
+			}
+		}
+
 	}
 
 	private MainModel load() {
@@ -108,21 +146,24 @@ public class Main {
 		}
 	}
 
+	public void dump() {
+		for (CompleteIndividual i : individuals.values()) {
+			System.out.println(i.individual.id + " " + i.done);
+			for (Entry<star.genetics.genetic.model.Gene, star.genetics.genetic.model.DiploidAlleles> e : i.makeup
+					.entrySet()) {
+				System.out.println("\t" + e.getKey().getName() + " "
+						+ e.getValue());
+			}
+
+		}
+
+	}
+
 	private void buildEnvironment(MainModel model) {
 		this.genome = buildGenome(model);
 		this.matingEngine = new PedigreeMatingEngine();
 		buildIndividuals(model);
 		buildRelationships(model);
-		buildGenotypes(model);
-		for( CompleteIndividual i : individuals.values())
-		{
-			System.out.println( i.individual.id + " " + i.done  );
-			for( Entry<star.genetics.genetic.model.Gene,star.genetics.genetic.model.DiploidAlleles> e : i.makeup.entrySet())
-			{
-				System.out.println( "\t" + e.getKey().getName() + " " + e.getValue() );
-			}
-			
-		}
 	}
 
 	private GenomeImpl buildGenome(MainModel model) {
@@ -235,7 +276,7 @@ public class Main {
 		for (CompleteIndividual c : individuals.values()) {
 			if (COMPLETE.equalsIgnoreCase(c.individual.genotype)) {
 				GeneticMakeupImpl makeup = c.makeup;
-				fixMakeup( makeup , c.sex );
+				fixMakeup(makeup, c.sex);
 			}
 		}
 
@@ -245,67 +286,55 @@ public class Main {
 	}
 
 	private void fixMakeup(GeneticMakeupImpl makeup, Sex sex) {
-		if( Sex.FEMALE.equals(sex))
-		{
+		if (Sex.FEMALE.equals(sex)) {
 			// needs XX
 			boolean OK = false;
-			for( star.genetics.genetic.model.Gene g : makeup.keySet())
-			{
-				if( "X".equalsIgnoreCase(g.getChromosome().getName()))
-				{
-					if( makeup.get(g).getAlleleCount() == 2)
-					{
+			for (star.genetics.genetic.model.Gene g : makeup.keySet()) {
+				if ("X".equalsIgnoreCase(g.getChromosome().getName())) {
+					if (makeup.get(g).getAlleleCount() == 2) {
 						OK = true;
 						break;
 					}
 				}
 			}
-			if( !OK )
-			{
-				star.genetics.genetic.model.Gene g = genome.getChromosomeByName("X").getGeneByName("G_X");
+			if (!OK) {
+				star.genetics.genetic.model.Gene g = genome
+						.getChromosomeByName("X").getGeneByName("G_X");
 				Allele a = g.getGeneTypes().get(0);
 				makeup.put(g, new DiploidAllelesImpl(a, a));
 			}
-		}
-		else
-		{
+		} else {
 			boolean xOK = false;
 			boolean yOK = false;
-			for( star.genetics.genetic.model.Gene g : makeup.keySet())
-			{
-				if( "X".equalsIgnoreCase(g.getChromosome().getName()))
-				{
-					if( makeup.get(g).getAlleleCount() == 1)
-					{
+			for (star.genetics.genetic.model.Gene g : makeup.keySet()) {
+				if ("X".equalsIgnoreCase(g.getChromosome().getName())) {
+					if (makeup.get(g).getAlleleCount() == 1) {
 						xOK = true;
 						break;
 					}
 				}
-				if( "Y".equalsIgnoreCase(g.getChromosome().getName()))
-				{
-					if( makeup.get(g).getAlleleCount() == 1)
-					{
+				if ("Y".equalsIgnoreCase(g.getChromosome().getName())) {
+					if (makeup.get(g).getAlleleCount() == 1) {
 						yOK = true;
 						break;
 					}
 				}
 			}
-			if( !xOK )
-			{
-				star.genetics.genetic.model.Gene g = genome.getChromosomeByName("X").getGeneByName("G_X");
+			if (!xOK) {
+				star.genetics.genetic.model.Gene g = genome
+						.getChromosomeByName("X").getGeneByName("G_X");
 				Allele a = g.getGeneTypes().get(0);
 				makeup.put(g, new DiploidAllelesImpl(a, null));
 			}
-			if( !yOK )
-			{
-				star.genetics.genetic.model.Gene g = genome.getChromosomeByName("Y").getGeneByName("G_Y");
+			if (!yOK) {
+				star.genetics.genetic.model.Gene g = genome
+						.getChromosomeByName("Y").getGeneByName("G_Y");
 				Allele a = g.getGeneTypes().get(0);
 				makeup.put(g, new DiploidAllelesImpl(a, null));
 			}
 
-			
 		}
-		
+
 	}
 
 	private void processIndividual(CompleteIndividual c) {

@@ -21,7 +21,15 @@
 				"name": "Huntington's",
 				"kind": "fill",
 				"color": "black"
-			}
+			},
+			{"id": "A", "name":"A", "kind":"label"},
+			{"id": "B", "name":"B", "kind":"label"},
+			{"id": "C", "name":"C", "kind":"label"},
+			{"id": "D", "name":"D", "kind":"label"},
+			{"id": "Q", "name":"Q", "kind":"label"},
+			{"id": "W", "name":"W", "kind":"label"},
+			{"id": "E", "name":"E", "kind":"label"},
+			{"id": "R", "name":"R", "kind":"label"}
 		],
 
 		"individuals": 
@@ -403,7 +411,7 @@
 
 			{
 				"id": "V-3",
-				"sex": "M",
+				"sex": "F",
 				"markers": 
 				[
 					"H"
@@ -1120,7 +1128,6 @@
 				"children": 
 				[
 					"V-5",
-					"V-6",
 					"V-7"
 				]
 			},
@@ -1293,5 +1300,184 @@
 				"H"
 			]
 		}
+	},
+
+	"rules": 
+	{
+		"individuals": 
+		[
+			{
+				"id": "I-1",
+				"genotype": "complete",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					],
+
+					[
+						"A",
+						"B"
+					],
+
+					[
+						"Q",
+						"R"
+					]
+				]
+			},
+
+			{
+				"id": "I-2",
+				"genotype": "complete",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					],
+
+					[
+						"A",
+						"B"
+					],
+
+					[
+						"Q",
+						"R"
+					]
+				]
+			},
+			{
+				"id": "II-2",
+				"genotype": "default"
+			},
+			{
+				"id": "II-4",
+				"genotype": "default"
+			},
+			{
+				"id": "III-2",
+				"genotype": "default"
+			},
+			{
+				"id": "III-4",
+				"genotype": "default"
+			},
+			{
+				"id": "III-6",
+				"genotype": "default"
+			},
+			{
+				"id": "IV-2",
+				"genotype": "default"
+			},
+			{
+				"id": "IV-4",
+				"genotype": "default"
+			},
+			{
+				"id": "IV-6",
+				"genotype": "default"
+			},
+			{
+				"id": "IV-8",
+				"genotype": "default"
+			},
+			{
+				"id": "IV-9",
+				"genotype": "default"
+			},
+			{
+				"id": "IV-11",
+				"genotype": "default"
+			},
+			{
+				"id": "V-4",
+				"genotype": "default"
+			},
+			{
+				"id": "V-6",
+				"genotype": "default"
+			},
+			{
+				"id": "V-17",
+				"genotype": "default"
+			},
+			{
+				"id": "V-22",
+				"genotype": "default"
+			},
+			{
+				"id": "VI-2",
+				"genotype": "default"
+			},
+			{
+				"id": "VI-9",
+				"genotype": "default"
+			},
+			{
+				"id": "default",
+				"genotype": "template",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					],
+
+					[
+						"C",
+						"A"
+					],
+
+					[
+						"Q",
+						"R"
+					]
+				]
+			}
+		],
+
+		"genes": 
+		[
+			{
+				"id": "Huntington's",
+				"chromosome": "1",
+				"location": 20,
+				"alleles": 
+				[
+					"H",
+					"h"
+				]
+			},
+
+			{
+				"id": "Rest of alleles",
+				"chromosome": "1",
+				"location": 25,
+				"alleles": 
+				[
+					"A",
+					"B",
+					"C",
+					"D"
+				]
+			},
+
+			{
+				"id": "Unlinked",
+				"chromosome": "2",
+				"location": 25,
+				"alleles": 
+				[
+					"Q",
+					"W",
+					"E",
+					"R"
+				]
+			}
+		]
 	}
 }

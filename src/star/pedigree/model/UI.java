@@ -7,6 +7,7 @@ public class UI {
 	public Sex[] sexes;
 	public UIRelationship[] relationships;
 	public Marker[] markers;
+	public HashMap<String,Object> options;
 	public UIIndividual findUIIndividual( String id )
 	{
 		for( UIIndividual i : individuals )
@@ -22,7 +23,7 @@ public class UI {
 	public Marker findMarker( String id ) {
 		for( Marker m : markers )
 		{
-			if( id.equalsIgnoreCase(m.id))
+			if( id.equals(m.id))
 			{
 				return m;
 			}

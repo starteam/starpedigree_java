@@ -24,6 +24,10 @@ public class UIIndividual extends HashMap<String, Object> {
 		{
 			put( "markers", new ArrayList<>());
 		}
-		((ArrayList<Object>)get("markers")).add(marker);
+		ArrayList<Object> markers = ((ArrayList<Object>)get("markers"));
+		if( markers.indexOf(marker) == -1)
+		{
+			markers.add(marker);
+		}
 	}
 }

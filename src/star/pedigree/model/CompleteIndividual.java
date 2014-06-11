@@ -13,6 +13,6 @@ public class CompleteIndividual {
 	
 	@Override
 	public String toString() {
-		return individual.id + " " + sex.toString() + " " + individual.genotype + " " + makeup;
+		return individual.id + " " + String.valueOf(sex) + " " + individual.genotype + " " + makeup;
 	}
 }

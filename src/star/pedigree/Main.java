@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
+import javax.management.RuntimeErrorException;
+
 import star.genetics.genetic.impl.AlleleImpl;
 import star.genetics.genetic.impl.ChromosomeImpl;
 import star.genetics.genetic.impl.CreatureImpl;
@@ -40,7 +42,9 @@ import com.google.gson.stream.JsonReader;
 public class Main {
 
 	public final static String COMPLETE = "complete";
+	public final static String DEFAULT = "default";
 	public final static String NONE = "none";
+	private static final String TEMPLATE = "template";
 
 	Logger logger = Logger.getAnonymousLogger();
 	private String config;
@@ -102,8 +106,8 @@ public class Main {
 
 	private void printModel(MainModel model) {
 		Gson g = new Gson();
-		System.out.println( g.toJson(model) );
-		
+		System.out.println(g.toJson(model));
+
 	}
 
 	private void updateModel(MainModel model,
@@ -112,12 +116,17 @@ public class Main {
 			individual.clearMarkers();
 		}
 		for (CompleteIndividual i : individuals.values()) {
-			UIIndividual individual = model.ui
-					.findUIIndividual(i.individual.id);
-			GeneticMakeupImpl makeup = i.makeup;
-			for (star.genetics.genetic.model.DiploidAlleles d : makeup.values()) {
-				updateUIIndividualWithMarker(model, individual, d.get(0));
-				updateUIIndividualWithMarker(model, individual, d.get(1));
+			if (COMPLETE.equalsIgnoreCase(i.individual.genotype)) {
+				UIIndividual individual = model.ui
+						.findUIIndividual(i.individual.id);
+				GeneticMakeupImpl makeup = i.makeup;
+				for (star.genetics.genetic.model.DiploidAlleles d : makeup
+						.values()) {
+					updateUIIndividualWithMarker(model, individual, d.get(0));
+					updateUIIndividualWithMarker(model, individual, d.get(1));
+				}
+			} else {
+				logger.info("Skipping update for " + i.individual.id);
 			}
 		}
 	}
@@ -148,10 +157,9 @@ public class Main {
 
 	public void dump() {
 		for (CompleteIndividual i : individuals.values()) {
-			System.out.println(i.individual.id + " " + i.done);
 			for (Entry<star.genetics.genetic.model.Gene, star.genetics.genetic.model.DiploidAlleles> e : i.makeup
 					.entrySet()) {
-				System.out.println("\t" + e.getKey().getName() + " "
+				System.err.println("\t" + e.getKey().getName() + " "
 						+ e.getValue());
 			}
 
@@ -276,12 +284,14 @@ public class Main {
 		for (CompleteIndividual c : individuals.values()) {
 			if (COMPLETE.equalsIgnoreCase(c.individual.genotype)) {
 				GeneticMakeupImpl makeup = c.makeup;
+				logger.info("fixMakeup for " + c.individual.id);
+
 				fixMakeup(makeup, c.sex);
 			}
 		}
 
 		for (CompleteIndividual c : individuals.values()) {
-			processIndividual(c);
+			processIndividual(c, model);
 		}
 	}
 
@@ -337,29 +347,43 @@ public class Main {
 
 	}
 
-	private void processIndividual(CompleteIndividual c) {
+	private void processIndividual(CompleteIndividual c, MainModel model) {
 		logger.info("processIndividual: " + c.done + " " + c);
 		if (!c.done) {
-			if (!COMPLETE.equalsIgnoreCase(c.individual.genotype)) {
-				generateGenotype(c);
-			} else {
+			if (COMPLETE.equalsIgnoreCase(c.individual.genotype)) {
 				c.done = true;
+			} else if (DEFAULT.equalsIgnoreCase(c.individual.genotype)) {
+				CompleteIndividual d = individuals.get(DEFAULT);
+				if (d != null) {
+					GeneticMakeupImpl m = (GeneticMakeupImpl) d.makeup.clone();
+					Sex sex = model.getSex(c.individual.id);
+					fixMakeup(m, sex);
+					c.makeup = m;
+					c.individual.genotype = COMPLETE;
+
+				} else {
+					throw new RuntimeException("Default genotype not available");
+				}
+			} else if (TEMPLATE.equalsIgnoreCase(c.individual.genotype)) {
+				// nothing
+			} else {
+				generateGenotype(c, model);
 			}
 		}
 	}
 
-	private void generateGenotype(CompleteIndividual c) {
+	private void generateGenotype(CompleteIndividual c, MainModel model) {
 		logger.finer("generateGenotype: " + c);
-		generateParentGenotypes(c);
+		generateParentGenotypes(c, model);
 		generateChildGenotype(c);
 	}
 
-	private void generateParentGenotypes(CompleteIndividual c) {
+	private void generateParentGenotypes(CompleteIndividual c, MainModel model) {
 		logger.info("generateParentGenotypes: " + c);
 
 		if (c.parents != null && c.parents.length == 2) {
 			for (CompleteIndividual parent : c.parents) {
-				processIndividual(parent);
+				processIndividual(parent, model);
 			}
 			assert (c.parents[0].done && c.parents[1].done);
 		} else {

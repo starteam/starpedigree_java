@@ -35,9 +35,11 @@ import star.pedigree.model.MainModel;
 import star.pedigree.model.Marker;
 import star.pedigree.model.UIIndividual;
 import star.pedigree.model.UIRelationship;
+import sun.util.logging.resources.logging;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.corba.se.spi.ior.MakeImmutable;
 
 public class Main {
 
@@ -45,8 +47,9 @@ public class Main {
 	public final static String DEFAULT = "default";
 	public final static String NONE = "none";
 	private static final String TEMPLATE = "template";
+	private static final String PARTIAL = "partial";
 
-	Logger logger = Logger.getAnonymousLogger();
+	static Logger logger = Logger.getAnonymousLogger();
 	private String config;
 	private PedigreeMatingEngine matingEngine;
 	private GenomeImpl genome;
@@ -68,7 +71,17 @@ public class Main {
 						if (c.sex.equals(sex)) {
 							c.makeup = makeup;
 							c.individual.genotype = COMPLETE;
+							c.individual.alleles = makeup2alleles(makeup);
 							c.done = true;
+						}
+					} else if (PARTIAL.equalsIgnoreCase(c.individual.genotype)) {
+						if (c.sex.equals(sex)) {
+							if (matches(makeup, c.makeup)) {
+								c.makeup = makeup;
+								c.individual.genotype = COMPLETE;
+								c.individual.alleles = makeup2alleles(makeup);
+								c.done = true;
+							}
 						}
 					}
 				} catch (ParseException e) {
@@ -76,7 +89,21 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
+			if (!c.done) {
+				throw new RuntimeException();
+			}
 			logger.info(c + " " + c.done);
+		}
+
+		private DiploidAlleles[] makeup2alleles(GeneticMakeupImpl makeup) {
+			ArrayList<DiploidAlleles> alleles = new ArrayList<>();
+			for (star.genetics.genetic.model.DiploidAlleles a : makeup.values()) {
+				DiploidAlleles al = new DiploidAlleles();
+				al.add(a.get(0) != null ? a.get(0).getName() : "");
+				al.add(a.get(1) != null ? a.get(1).getName() : "");
+				alleles.add(al);
+			}
+			return null;
 		}
 
 		public GeneticMakeupImpl propose(CompleteIndividual c) {
@@ -136,6 +163,8 @@ public class Main {
 		if (allele != null) {
 			Marker m = model.ui.findMarker(allele.getName());
 			if (m != null) {
+				logger.info("Updating marker: " + individual.id() + " marker:"
+						+ m.id);
 				individual.addMarker(m.id);
 			}
 		}
@@ -157,6 +186,7 @@ public class Main {
 
 	public void dump() {
 		for (CompleteIndividual i : individuals.values()) {
+			System.err.println(i.individual.id);
 			for (Entry<star.genetics.genetic.model.Gene, star.genetics.genetic.model.DiploidAlleles> e : i.makeup
 					.entrySet()) {
 				System.err.println("\t" + e.getKey().getName() + " "
@@ -352,6 +382,9 @@ public class Main {
 		if (!c.done) {
 			if (COMPLETE.equalsIgnoreCase(c.individual.genotype)) {
 				c.done = true;
+			} else if (PARTIAL.equalsIgnoreCase(c.individual.genotype)) {
+				GeneticMakeupImpl templateMakeup = c.makeup;
+				generateGenotype(c, model, true);
 			} else if (DEFAULT.equalsIgnoreCase(c.individual.genotype)) {
 				CompleteIndividual d = individuals.get(DEFAULT);
 				if (d != null) {
@@ -367,15 +400,16 @@ public class Main {
 			} else if (TEMPLATE.equalsIgnoreCase(c.individual.genotype)) {
 				// nothing
 			} else {
-				generateGenotype(c, model);
+				generateGenotype(c, model, false);
 			}
 		}
 	}
 
-	private void generateGenotype(CompleteIndividual c, MainModel model) {
+	private void generateGenotype(CompleteIndividual c, MainModel model,
+			boolean hasTemplate) {
 		logger.finer("generateGenotype: " + c);
 		generateParentGenotypes(c, model);
-		generateChildGenotype(c);
+		generateChildGenotype(c, hasTemplate);
 	}
 
 	private void generateParentGenotypes(CompleteIndividual c, MainModel model) {
@@ -391,7 +425,21 @@ public class Main {
 		}
 	}
 
-	private void generateChildGenotype(CompleteIndividual c) {
+	private static boolean matches(GeneticMakeupImpl target,
+			GeneticMakeupImpl source) {
+		boolean ret = true;
+		for (Entry<star.genetics.genetic.model.Gene, star.genetics.genetic.model.DiploidAlleles> e : source
+				.entrySet()) {
+			star.genetics.genetic.model.DiploidAlleles td = target.get(e
+					.getKey());
+			star.genetics.genetic.model.DiploidAlleles sd = e.getValue();
+			ret &= sd.equals(td);
+		}
+		logger.info("Compare (" + ret + ")\n\t" + source + "\n\t" + target);
+		return ret;
+	}
+
+	private void generateChildGenotype(CompleteIndividual c, boolean hasTemplate) {
 		logger.info("generateChildGenotype: " + c);
 		matingEngine.makeup(c);
 		c.done = true;

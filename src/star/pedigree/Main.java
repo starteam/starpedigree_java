@@ -56,6 +56,17 @@ public class Main {
 	private TreeMap<String, star.genetics.genetic.model.Allele> alleleMap = new TreeMap<>();
 	private TreeMap<String, CompleteIndividual> individuals = new TreeMap<>();
 
+	public static DiploidAlleles[] makeup2alleles(GeneticMakeupImpl makeup) {
+		ArrayList<DiploidAlleles> alleles = new ArrayList<>();
+		for (star.genetics.genetic.model.DiploidAlleles a : makeup.values()) {
+			DiploidAlleles al = new DiploidAlleles();
+			al.add(a.get(0) != null ? a.get(0).getName() : "");
+			al.add(a.get(1) != null ? a.get(1).getName() : "");
+			alleles.add(al);
+		}
+		return alleles.toArray(new DiploidAlleles[0]);
+	}
+
 	class PedigreeMatingEngine extends MatingEngineImpl_XY {
 		private static final long serialVersionUID = 1L;
 
@@ -95,16 +106,6 @@ public class Main {
 			logger.info(c + " " + c.done);
 		}
 
-		private DiploidAlleles[] makeup2alleles(GeneticMakeupImpl makeup) {
-			ArrayList<DiploidAlleles> alleles = new ArrayList<>();
-			for (star.genetics.genetic.model.DiploidAlleles a : makeup.values()) {
-				DiploidAlleles al = new DiploidAlleles();
-				al.add(a.get(0) != null ? a.get(0).getName() : "");
-				al.add(a.get(1) != null ? a.get(1).getName() : "");
-				alleles.add(al);
-			}
-			return null;
-		}
 
 		public GeneticMakeupImpl propose(CompleteIndividual c) {
 			GeneticMakeup makeup1 = c.parents[0].makeup;
@@ -393,6 +394,7 @@ public class Main {
 					fixMakeup(m, sex);
 					c.makeup = m;
 					c.individual.genotype = COMPLETE;
+					c.individual.alleles = makeup2alleles(c.makeup);
 
 				} else {
 					throw new RuntimeException("Default genotype not available");

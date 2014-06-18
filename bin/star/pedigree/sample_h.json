@@ -1457,6 +1457,7 @@
 				"id": "III-4",
 				"genotype": "default"
 			},
+
 			{
 				"id": "III-5",
 				"genotype": "partial",
@@ -1473,6 +1474,7 @@
 				"id": "III-6",
 				"genotype": "default"
 			},
+
 			{
 				"id": "IV-1",
 				"genotype": "partial",
@@ -1489,6 +1491,7 @@
 				"id": "IV-2",
 				"genotype": "default"
 			},
+
 			{
 				"id": "IV-3",
 				"genotype": "partial",
@@ -1505,6 +1508,7 @@
 				"id": "IV-4",
 				"genotype": "default"
 			},
+
 			{
 				"id": "IV-5",
 				"genotype": "partial",
@@ -1521,6 +1525,7 @@
 				"id": "IV-6",
 				"genotype": "default"
 			},
+
 			{
 				"id": "IV-7",
 				"genotype": "partial",
@@ -1542,6 +1547,7 @@
 				"id": "IV-9",
 				"genotype": "default"
 			},
+
 			{
 				"id": "IV-10",
 				"genotype": "partial",
@@ -1560,8 +1566,32 @@
 			},
 
 			{
+				"id": "V-3",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+
+			{
 				"id": "V-4",
 				"genotype": "default"
+			},
+
+			{
+				"id": "V-5",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
 			},
 
 			{
@@ -1570,8 +1600,80 @@
 			},
 
 			{
+				"id": "V-8",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "V-13",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "V-16",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+
+			{
 				"id": "V-17",
 				"genotype": "default"
+			},
+
+			{
+				"id": "V-18",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "V-19",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "V-21",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
 			},
 
 			{
@@ -1580,8 +1682,41 @@
 			},
 
 			{
+				"id": "V-24",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+			{
+				"id": "VI-1",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+			{
 				"id": "VI-2",
 				"genotype": "default"
+			},
+			{
+				"id": "VI-8",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
 			},
 
 			{

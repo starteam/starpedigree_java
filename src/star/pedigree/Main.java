@@ -44,6 +44,7 @@ import com.sun.corba.se.spi.ior.MakeImmutable;
 public class Main {
 
 	public final static String COMPLETE = "complete";
+	public final static String PARTIAL_UNIQUE = "partial_unique";
 	public final static String DEFAULT = "default";
 	public final static String NONE = "none";
 	private static final String TEMPLATE = "template";
@@ -106,7 +107,6 @@ public class Main {
 			logger.info(c + " " + c.done);
 		}
 
-
 		public GeneticMakeupImpl propose(CompleteIndividual c) {
 			GeneticMakeup makeup1 = c.parents[0].makeup;
 			GeneticMakeup makeup2 = c.parents[1].makeup;
@@ -153,6 +153,7 @@ public class Main {
 					updateUIIndividualWithMarker(model, individual, d.get(0));
 					updateUIIndividualWithMarker(model, individual, d.get(1));
 				}
+				individual.addGenotypes( makeup );
 			} else {
 				logger.info("Skipping update for " + i.individual.id);
 			}
@@ -221,7 +222,7 @@ public class Main {
 			star.genetics.genetic.model.Gene gene = chromosome
 					.getGeneByName(geneName);
 			if (gene == null) {
-				gene = new GeneImpl(geneName, position, chromosome);
+				gene = new GeneImpl(geneName, position / 100f, chromosome);
 			} else {
 				throw new RuntimeException("Gene name already exists "
 						+ geneName);
@@ -316,8 +317,14 @@ public class Main {
 			if (COMPLETE.equalsIgnoreCase(c.individual.genotype)) {
 				GeneticMakeupImpl makeup = c.makeup;
 				logger.info("fixMakeup for " + c.individual.id);
-
 				fixMakeup(makeup, c.sex);
+			}
+			if (PARTIAL_UNIQUE.equalsIgnoreCase(c.individual.genotype)) {
+				logger.info("partial_unique for " + c.individual.id);
+				generateDiploidAlleles(model,c.makeup, c.individual.options);
+				logger.info("fixMakeup for " + c.individual.id);
+				fixMakeup(c.makeup, c.sex);
+				c.individual.genotype = COMPLETE;
 			}
 		}
 
@@ -326,6 +333,69 @@ public class Main {
 		}
 	}
 
+	private boolean nameAvailable(GeneticMakeupImpl makeup, String name )
+	{
+		boolean available = true;
+		for (star.genetics.genetic.model.Gene g : genome.getGenes()) {
+			if( g.getAlleleByName(name) != null )
+			{
+				available = false;
+				break;
+			}
+		}
+		return available;
+	}
+	private void generateDiploidAlleles(MainModel model, GeneticMakeupImpl makeup, String options) {
+		for (star.genetics.genetic.model.Gene g : genome.getGenes()) {
+			if (String.valueOf(options).equals(g.getName())) {
+				logger.info("generateDiploidAlleles " + g.getId());
+				char c = 'A';
+				AlleleImpl first = null;
+				AlleleImpl second = null;
+				while (c < 'Z') {
+					String name = Character.toString(c);
+					if (nameAvailable(makeup, name)) {
+						first = new AlleleImpl(name, g);
+						alleleMap.put(first.getName(), first);
+						addUIMarker(model,name);
+						break;
+					}
+					c++;
+				}
+				while (c < 'Z') {
+					String name = Character.toString(c);
+					if (nameAvailable(makeup, name)) {
+						second = new AlleleImpl(name, g);
+						alleleMap.put(second.getName(), second);
+						addUIMarker(model,name);
+						break;
+					}
+					c++;
+				}
+				if (first != null && second != null) {
+					makeup.put(g, new DiploidAllelesImpl(first, second));
+				} else {
+					throw new RuntimeException(
+							"Can not generate allele with this method");
+				}
+			}
+
+		}
+
+	}
+
+	private void addUIMarker(MainModel model, String str )
+	{
+		Marker[] markers = model.ui.markers;
+		Marker[] new_markers = new Marker[markers.length+1];
+		System.arraycopy(markers, 0, new_markers, 0, markers.length);
+		Marker new_marker = new Marker();
+		new_marker.id = str;
+		new_marker.name = str;
+		new_marker.kind = "label";
+		new_markers[markers.length] = new_marker;
+		model.ui.markers = new_markers;
+	}
 	private void fixMakeup(GeneticMakeupImpl makeup, Sex sex) {
 		if (Sex.FEMALE.equals(sex)) {
 			// needs XX

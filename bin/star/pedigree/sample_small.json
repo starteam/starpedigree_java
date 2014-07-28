@@ -22,7 +22,11 @@
 				"kind": "fill",
 				"color": "black"
 			},
-
+			{	"id": "h",
+				"name": "Disease",
+				"kind": "label"
+			
+			},
 			{
 				"id": "A",
 				"name": "A",
@@ -38,36 +42,6 @@
 			{
 				"id": "C",
 				"name": "C",
-				"kind": "label"
-			},
-
-			{
-				"id": "D",
-				"name": "D",
-				"kind": "label"
-			},
-
-			{
-				"id": "Q",
-				"name": "Q",
-				"kind": "label"
-			},
-
-			{
-				"id": "W",
-				"name": "W",
-				"kind": "label"
-			},
-
-			{
-				"id": "E",
-				"name": "E",
-				"kind": "label"
-			},
-
-			{
-				"id": "R",
-				"name": "R",
 				"kind": "label"
 			}
 		],
@@ -502,7 +476,8 @@
 
 			{
 				"id": "I-2",
-				"genotype": "partial_generated",
+				"genotype": "partial_unique",
+				"options": "Alleles",
 				"alleles": 
 				[
 					[
@@ -514,13 +489,15 @@
 
 			{
 				"id": "I-3",
-				"genotype": "partial_generated",
+				"genotype": "partial_unique",
+				"options": "Alleles",
 				"alleles": 
 				[
 					[
 						"h",
 						"h"
-					]				]
+					]
+				]
 			},
 
 			{
@@ -535,14 +512,15 @@
 
 					[
 						"A",
-						"B"
+						"C"
 					]
 				]
 			},
 
 			{
 				"id": "II-1",
-				"genotype": "partial_generated",
+				"genotype": "partial_unique",
+				"options": "Alleles",
 				"alleles": 
 				[
 					[
@@ -626,7 +604,8 @@
 
 			{
 				"id": "II-8",
-				"genotype": "partial_generated",
+				"genotype": "partial_unique",
+				"options": "Alleles",
 				"alleles": 
 				[
 					[
@@ -635,6 +614,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-1",
 				"genotype": "partial",
@@ -646,6 +626,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-2",
 				"genotype": "partial",
@@ -657,6 +638,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-3",
 				"genotype": "partial",
@@ -668,6 +650,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-4",
 				"genotype": "partial",
@@ -679,6 +662,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-5",
 				"genotype": "partial",
@@ -690,6 +674,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-6",
 				"genotype": "partial",
@@ -701,6 +686,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-7",
 				"genotype": "partial",
@@ -712,6 +698,7 @@
 					]
 				]
 			},
+
 			{
 				"id": "III-8",
 				"genotype": "partial",
@@ -739,15 +726,14 @@
 			},
 
 			{
-				"id": "Rest of alleles",
+				"id": "Alleles",
 				"chromosome": "1",
 				"location": 25,
 				"alleles": 
 				[
 					"A",
 					"B",
-					"C",
-					"D"
+					"C"
 				]
 			},
 

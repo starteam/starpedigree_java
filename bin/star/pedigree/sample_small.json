@@ -456,6 +456,7 @@
 				]
 			}
 		],
+
 		"options": 
 		{
 			"layout": "grid",
@@ -495,38 +496,64 @@
 					[
 						"A",
 						"B"
-					],
-					[
-						"Q",
-						"R"
 					]
 				]
 			},
 
 			{
 				"id": "I-2",
-				"genotype": "complete",
+				"genotype": "partial_generated",
 				"alleles": 
 				[
 					[
 						"h",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "I-3",
+				"genotype": "partial_generated",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					]				]
+			},
+
+			{
+				"id": "I-4",
+				"genotype": "complete",
+				"alleles": 
+				[
+					[
+						"H",
 						"h"
 					],
 
 					[
 						"A",
 						"B"
-					],
-
-					[
-						"Q",
-						"R"
 					]
 				]
 			},
 
 			{
 				"id": "II-1",
+				"genotype": "partial_generated",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "II-2",
 				"genotype": "partial",
 				"alleles": 
 				[
@@ -535,11 +562,6 @@
 						"h"
 					]
 				]
-			},
-
-			{
-				"id": "II-2",
-				"genotype": "default"
 			},
 
 			{
@@ -548,7 +570,7 @@
 				"alleles": 
 				[
 					[
-						"H",
+						"h",
 						"h"
 					]
 				]
@@ -556,62 +578,120 @@
 
 			{
 				"id": "II-4",
-				"genotype": "default"
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
 			},
 
+			{
+				"id": "II-5",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "II-6",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "II-7",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
+						"H",
+						"h"
+					]
+				]
+			},
+
+			{
+				"id": "II-8",
+				"genotype": "partial_generated",
+				"alleles": 
+				[
+					[
+						"h",
+						"h"
+					]
+				]
+			},
 			{
 				"id": "III-1",
 				"genotype": "partial",
 				"alleles": 
 				[
 					[
+						"h",
+						"h"
+					]
+				]
+			},
+			{
+				"id": "III-2",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
 						"H",
 						"h"
 					]
 				]
 			},
-
-			{
-				"id": "III-2",
-				"genotype": "default"
-			},
-
 			{
 				"id": "III-3",
 				"genotype": "partial",
 				"alleles": 
 				[
 					[
+						"h",
+						"h"
+					]
+				]
+			},
+			{
+				"id": "III-4",
+				"genotype": "partial",
+				"alleles": 
+				[
+					[
 						"H",
 						"h"
 					]
 				]
 			},
-
-			{
-				"id": "III-4",
-				"genotype": "default"
-			},
-
 			{
 				"id": "III-5",
 				"genotype": "partial",
 				"alleles": 
 				[
 					[
-						"H",
+						"h",
 						"h"
 					]
 				]
 			},
-
 			{
 				"id": "III-6",
-				"genotype": "default"
-			},
-
-			{
-				"id": "IV-1",
 				"genotype": "partial",
 				"alleles": 
 				[
@@ -621,14 +701,8 @@
 					]
 				]
 			},
-
 			{
-				"id": "IV-2",
-				"genotype": "default"
-			},
-
-			{
-				"id": "IV-3",
+				"id": "III-7",
 				"genotype": "partial",
 				"alleles": 
 				[
@@ -638,248 +712,14 @@
 					]
 				]
 			},
-
 			{
-				"id": "IV-4",
-				"genotype": "default"
-			},
-
-			{
-				"id": "IV-5",
+				"id": "III-8",
 				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "IV-6",
-				"genotype": "default"
-			},
-
-			{
-				"id": "IV-7",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "IV-8",
-				"genotype": "default"
-			},
-
-			{
-				"id": "IV-9",
-				"genotype": "default"
-			},
-
-			{
-				"id": "IV-10",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "IV-11",
-				"genotype": "default"
-			},
-
-			{
-				"id": "V-3",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-4",
-				"genotype": "default"
-			},
-
-			{
-				"id": "V-5",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-6",
-				"genotype": "default"
-			},
-
-			{
-				"id": "V-8",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-13",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-16",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-17",
-				"genotype": "default"
-			},
-
-			{
-				"id": "V-18",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-19",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-21",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "V-22",
-				"genotype": "default"
-			},
-
-			{
-				"id": "V-24",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "VI-1",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "VI-2",
-				"genotype": "default"
-			},
-
-			{
-				"id": "VI-8",
-				"genotype": "partial",
-				"alleles": 
-				[
-					[
-						"H",
-						"h"
-					]
-				]
-			},
-
-			{
-				"id": "VI-9",
-				"genotype": "default"
-			},
-
-			{
-				"id": "default",
-				"genotype": "template",
 				"alleles": 
 				[
 					[
 						"h",
 						"h"
-					],
-
-					[
-						"C",
-						"A"
-					],
-
-					[
-						"Q",
-						"R"
 					]
 				]
 			}

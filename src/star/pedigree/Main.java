@@ -153,7 +153,7 @@ public class Main {
 					updateUIIndividualWithMarker(model, individual, d.get(0));
 					updateUIIndividualWithMarker(model, individual, d.get(1));
 				}
-				individual.addGenotypes( makeup );
+				individual.addGenotypes( makeup, genome );
 			} else {
 				logger.info("Skipping update for " + i.individual.id);
 			}
